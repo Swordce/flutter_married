@@ -1,8 +1,6 @@
-import 'dart:io';
-
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class ImproveInformationState implements Cloneable<ImproveInformationState> {
   TextEditingController introduceController;
@@ -10,14 +8,12 @@ class ImproveInformationState implements Cloneable<ImproveInformationState> {
   String birthDay;
   String personHeight;
 
-  File avatar;
-  ImagePicker picker = ImagePicker();
+  List<Asset> avatar;
 
   @override
   ImproveInformationState clone() {
     return ImproveInformationState()
       ..avatar = avatar
-      ..picker = picker
       ..introduceController = introduceController
       ..nickNameController = nickNameController
       ..birthDay = birthDay

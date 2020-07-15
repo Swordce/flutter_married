@@ -322,18 +322,14 @@ Widget buildView(
                                       height: 42,
                                       child: Image.asset('assets/icon_select_male.png'),
                                     ),
-                                    Visibility(
-                                      visible: state.isMale,
-                                      child: Container(
-                                        margin: EdgeInsets.only(right: 10),
-                                        child: DottedBorder(
-                                          color: Colors.white,
-                                          strokeWidth: 1,
-                                          child: Container(
-                                            width: 17,
-                                            height: 12.5,
-                                            child: Image.asset('assets/icon_select.png'),
-                                          ),
+                                    Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      width: 17,
+                                      height: 12.5,
+                                      child: Visibility(
+                                        visible: state.isMale,
+                                        child: Container(
+                                          child: Image.asset('assets/icon_select.png'),
                                         ),
                                       ),
                                     ),
@@ -355,18 +351,14 @@ Widget buildView(
                                       height: 42,
                                       child: Image.asset('assets/icon_select_female.png'),
                                     ),
-                                    Visibility(
-                                      visible: !state.isMale,
-                                      child: Container(
-                                        margin: EdgeInsets.only(right: 10),
-                                        child: DottedBorder(
-                                          color: Colors.white,
-                                          strokeWidth: 1,
-                                          child: Container(
-                                            width: 17,
-                                            height: 12.5,
-                                            child: Image.asset('assets/icon_select.png'),
-                                          ),
+                                    Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      width: 17,
+                                      height: 12.5,
+                                      child: Visibility(
+                                        visible: !state.isMale,
+                                        child: Container(
+                                          child: Image.asset('assets/icon_select.png'),
                                         ),
                                       ),
                                     ),

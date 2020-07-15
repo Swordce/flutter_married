@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -56,30 +57,30 @@ Widget buildView(
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 72),
-                  child: DottedBorder(
-                    color: Color(0xffeeeeee),
-                    strokeWidth: 1,
-                    child: GestureDetector(
-                      child: Container(
-                        width: 82,
-                        height: 82,
-                        child: Stack(
-                          children: <Widget>[
-                            Image.asset('assets/icon_camera_bg.png'),
-                            state.avatar != null?CircleAvatar(
-                              backgroundImage: FileImage(state.avatar),
-                            ):Container(),
-                            Container(
-                              alignment: Alignment.center,
-                              child: Image.asset('assets/icon_camera.png'),
+                  child: GestureDetector(
+                    child: Container(
+                      width: 82,
+                      height: 82,
+                      child: Stack(
+                        children: <Widget>[
+                          Image.asset('assets/icon_camera_bg.png'),
+                          state.avatar != null && state.avatar.length > 0 ?ClipOval(
+                            child: AssetThumb(
+                              asset: state.avatar[0],
+                              width: 82,
+                              height: 82,
                             ),
-                          ],
-                        ),
+                          ):Container(),
+                          Container(
+                            alignment: Alignment.center,
+                            child: Image.asset('assets/icon_camera.png'),
+                          ),
+                        ],
                       ),
-                      onTap: () {
-                        dispatch(ImproveInformationActionCreator.onGetImage());
-                      },
                     ),
+                    onTap: () {
+                      dispatch(ImproveInformationActionCreator.onGetImage());
+                    },
                   ),
                 ),
                 Container(
