@@ -64,13 +64,15 @@ Widget buildView(
                       child: Stack(
                         children: <Widget>[
                           Image.asset('assets/icon_camera_bg.png'),
-                          state.avatar != null && state.avatar.length > 0 ?ClipOval(
-                            child: AssetThumb(
-                              asset: state.avatar[0],
-                              width: 82,
-                              height: 82,
-                            ),
-                          ):Container(),
+                          state.avatar != null && state.avatar.length > 0
+                              ? ClipOval(
+                                  child: AssetThumb(
+                                    asset: state.avatar[0],
+                                    width: 82,
+                                    height: 82,
+                                  ),
+                                )
+                              : Container(),
                           Container(
                             alignment: Alignment.center,
                             child: Image.asset('assets/icon_camera.png'),
@@ -94,7 +96,6 @@ Widget buildView(
                   child: ListView(
                     shrinkWrap: true,
                     children: <Widget>[
-
                       Container(
                         height: 48,
                         margin: EdgeInsets.only(left: 15, right: 15),
@@ -102,54 +103,66 @@ Widget buildView(
                           children: <Widget>[
                             Text(
                               '昵称',
-                              style:
-                              TextStyle(fontSize: 15, color: Color(0xff333333)),
+                              style: TextStyle(
+                                  fontSize: 15, color: Color(0xff333333)),
                             ),
-                            Expanded(child: Container(
+                            Expanded(
+                                child: Container(
                               margin: EdgeInsets.only(left: 15, right: 15),
                               child: TextField(
+                                textDirection: TextDirection.rtl,
                                 cursorColor: Color(0xff333333),
                                 maxLines: 1,
                                 controller: state.nickNameController,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: '',
-                                    hintStyle:
-                                    TextStyle(color: Color(0xff333333), fontSize: 15)),
+                                    hintStyle: TextStyle(
+                                        color: Color(0xff333333),
+                                        fontSize: 15)),
                               ),
                             )),
                           ],
                         ),
                       ),
-
                       Divider(
                         color: Color(0xffeeeeee),
                         height: 0.5,
                         indent: 15,
                         endIndent: 15,
                       ),
-                      Container(
-                        height: 48,
-                        margin: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              '生日',
-                              style:
-                              TextStyle(fontSize: 15, color: Color(0xff333333)),
-                            ),
-                            Expanded(child: Container()),
-                            Container(
-                              margin: EdgeInsets.only(right: 10),
-                              child: Text('${state.birthDay??''}',style: TextStyle(fontSize: 15,color: Color(0xff333333)),),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 15,
-                              color: Color(0xffcccccc),
-                            ),
-                          ],
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        child: Container(
+                          height: 48,
+                          margin: EdgeInsets.only(left: 15, right: 15),
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                '生日',
+                                style: TextStyle(
+                                    fontSize: 15, color: Color(0xff333333)),
+                              ),
+                              Expanded(child: Container()),
+                              Container(
+                                margin: EdgeInsets.only(right: 10),
+                                child: Text(
+                                  '${state.birthDay}',
+                                  style: TextStyle(
+                                      fontSize: 15, color: Color(0xff333333)),
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 15,
+                                color: Color(0xffcccccc),
+                              ),
+                            ],
+                          ),
                         ),
+                        onTap: () {
+                          dispatch(ImproveInformationActionCreator.onShowDatePicker());
+                        },
                       ),
                       Divider(
                         color: Color(0xffeeeeee),
@@ -164,13 +177,17 @@ Widget buildView(
                           children: <Widget>[
                             Text(
                               '身高',
-                              style:
-                              TextStyle(fontSize: 15, color: Color(0xff333333)),
+                              style: TextStyle(
+                                  fontSize: 15, color: Color(0xff333333)),
                             ),
                             Expanded(child: Container()),
                             Container(
                               margin: EdgeInsets.only(right: 10),
-                              child: Text('${state.personHeight??''}',style: TextStyle(fontSize: 15,color: Color(0xff333333)),),
+                              child: Text(
+                                '${state.personHeight==null?'':state.personHeight}',
+                                style: TextStyle(
+                                    fontSize: 15, color: Color(0xff333333)),
+                              ),
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
@@ -187,38 +204,45 @@ Widget buildView(
                         endIndent: 15,
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 15, right: 15,top: 14),
+                        margin: EdgeInsets.only(left: 15, right: 15, top: 14),
                         width: double.infinity,
                         height: 120,
                         decoration: BoxDecoration(
-                          border:
-                          new Border.all(color: Color(0xFFeeeeee), width: 0.5),
+                          border: new Border.all(
+                              color: Color(0xFFeeeeee), width: 0.5),
                         ),
                         child: Column(
                           children: <Widget>[
                             Container(
-                              margin:EdgeInsets.only(left: 13,right: 13,top: 13,bottom: 5.5),
+                              margin: EdgeInsets.only(
+                                  left: 13, right: 13, top: 13, bottom: 5.5),
                               child: TextField(
                                 maxLines: 3,
                                 controller: state.introduceController,
-                                style: TextStyle(color: Color(0xff333333), fontSize: 15),
+                                style: TextStyle(
+                                    color: Color(0xff333333), fontSize: 15),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: '介绍下自己吧~',
-                                    hintStyle:
-                                    TextStyle(color: Color(0xffcccccc), fontSize: 15)),
+                                    hintStyle: TextStyle(
+                                        color: Color(0xffcccccc),
+                                        fontSize: 15)),
                               ),
                             ),
                             Container(
                               alignment: Alignment.centerRight,
                               margin: EdgeInsets.only(right: 18.5),
-                              child: Text('${state.introduceController.text ==null?0:state.introduceController.text.length}/240',style: TextStyle(fontSize: 12,color: Color(0xffcccccc)),),
+                              child: Text(
+                                '${state.introduceController.text == null ? 0 : state.introduceController.text.length}/240',
+                                style: TextStyle(
+                                    fontSize: 12, color: Color(0xffcccccc)),
+                              ),
                             )
                           ],
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 15,right: 15,top: 22.5),
+                        margin: EdgeInsets.only(left: 15, right: 15, top: 22.5),
                         child: Image.asset('assets/icon_finish_register.png'),
                       ),
                     ],

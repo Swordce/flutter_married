@@ -5,8 +5,8 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 class ImproveInformationState implements Cloneable<ImproveInformationState> {
   TextEditingController introduceController;
   TextEditingController nickNameController;
-  String birthDay;
-  String personHeight;
+  String birthDay = '';
+  String personHeight = '';
 
   List<Asset> avatar;
 

@@ -42,6 +42,7 @@ dependencies:
   animated_widgets: ^1.0.6
   #虚线边框
   dotted_border: ^1.0.5
+  #图片选择
   multi_image_picker: ^4.6.5
 
 dev_dependencies:
