@@ -13,7 +13,24 @@ Effect<RegisterState> buildEffect() {
     RegisterAction.getVerityCode: _onGetVerityCode,
     RegisterAction.isMale: _onIsMale,
     Lifecycle.initState: _onInit,
+    Lifecycle.dispose:_onDispose,
   });
+}
+
+
+
+void _onInit(Action action, Context<RegisterState> ctx) {
+  ctx.state.phoneEditController = TextEditingController();
+  ctx.state.pwdEditController = TextEditingController();
+}
+
+void _onDispose(Action action, Context<RegisterState> ctx) {
+  ctx.state.phoneEditController.dispose();
+  ctx.state.pwdEditController.dispose();
+  if(ctx.state.timer != null) {
+    ctx.state.timer.cancel();
+    ctx.state.timer = null;
+  }
 }
 
 void _onAction(Action action, Context<RegisterState> ctx) {
@@ -42,11 +59,6 @@ void _countDownTimer(Context<RegisterState> ctx) {
 
 void _onGetVerityCode(Action action, Context<RegisterState> ctx) {
   _countDownTimer(ctx);
-}
-
-void _onInit(Action action, Context<RegisterState> ctx) {
-  ctx.state.phoneEditController = TextEditingController();
-  ctx.state.pwdEditController = TextEditingController();
 }
 
 void _onIsShowPwd(Action action, Context<RegisterState> ctx) {

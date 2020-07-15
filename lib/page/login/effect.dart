@@ -13,6 +13,7 @@ Effect<LoginState> buildEffect() {
     LoginAction.isVerityCodeLogin: _onIsVerityCodeLogin,
     LoginAction.getVerityCode: _onGetVerityCode,
     Lifecycle.initState: _onInit,
+    Lifecycle.dispose:_onDispose,
   });
 }
 
@@ -41,6 +42,15 @@ void _onGetVerityCode(Action action, Context<LoginState> ctx) {
 void _onInit(Action action, Context<LoginState> ctx) {
   ctx.state.phoneEditController = TextEditingController();
   ctx.state.pwdEditController = TextEditingController();
+}
+
+void _onDispose(Action action, Context<LoginState> ctx) {
+  ctx.state.phoneEditController.dispose();
+  ctx.state.pwdEditController.dispose();
+  if(ctx.state.timer != null) {
+    ctx.state.timer.cancel();
+    ctx.state.timer = null;
+  }
 }
 
 void _onIsVistor(Action action, Context<LoginState> ctx) {
