@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'page/improve_information/page.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(createApp());
 
 class MyApp extends StatelessWidget {
   @override
