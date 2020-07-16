@@ -114,6 +114,7 @@ Widget buildView(SplashState state, Dispatch dispatch,
                     fit: BoxFit.fill,
                   ),
                   onTap: () {
+//                    Navigator.of(viewService.context).pop();
                     Navigator
                         .of(viewService.context)
                         .pushNamed('login_page');

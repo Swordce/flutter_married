@@ -1,6 +1,7 @@
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -27,6 +28,7 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                 if (state.isVistor) {
                   dispatch(LoginActionCreator.onIsVistor());
                 } else {
+//                  SystemNavigator.pop();
                   Navigator.of(viewService.context).pop();
                 }
               },

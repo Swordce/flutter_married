@@ -9,6 +9,46 @@ import 'state.dart';
 
 Widget buildView(
     ImproveInformationState state, Dispatch dispatch, ViewService viewService) {
+
+  void _showBottomSheetDialog() {
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: viewService.context,
+        builder: (builder) {
+          return new Container(
+              height: 300,
+              decoration: new BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: new BorderRadius.only(
+                      topLeft: const Radius.circular(25.0),
+                      topRight: const Radius.circular(25.0))),
+              child: Container(
+                child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        child: Container(
+                          height: 50,
+                          alignment: Alignment.center,
+                          child: Text('${state.heights[index]} cm',style: TextStyle(fontSize: 15,color: Color(0xff333333)),),
+                        ),
+                        onTap: () {
+                          dispatch(ImproveInformationActionCreator.onGetHeight('${state.heights[index]} cm'));
+                          Navigator.pop(viewService.context);
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return Container(
+                        color: Color(0xffffffff),
+                        height: 0.5,
+                      );
+                    },
+                    itemCount: state.heights.length),
+              ));
+        });
+  }
+
   return SafeArea(
     child: Scaffold(
       backgroundColor: Colors.white,
@@ -170,32 +210,38 @@ Widget buildView(
                         indent: 15,
                         endIndent: 15,
                       ),
-                      Container(
-                        height: 48,
-                        margin: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              '身高',
-                              style: TextStyle(
-                                  fontSize: 15, color: Color(0xff333333)),
-                            ),
-                            Expanded(child: Container()),
-                            Container(
-                              margin: EdgeInsets.only(right: 10),
-                              child: Text(
-                                '${state.personHeight==null?'':state.personHeight}',
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        child: Container(
+                          height: 48,
+                          margin: EdgeInsets.only(left: 15, right: 15),
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                '身高',
                                 style: TextStyle(
                                     fontSize: 15, color: Color(0xff333333)),
                               ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 15,
-                              color: Color(0xffcccccc),
-                            ),
-                          ],
+                              Expanded(child: Container()),
+                              Container(
+                                margin: EdgeInsets.only(right: 10),
+                                child: Text(
+                                  state.personHeight == null || state.personHeight.isEmpty?'':state.personHeight,
+                                  style: TextStyle(
+                                      fontSize: 15, color: Color(0xff333333)),
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 15,
+                                color: Color(0xffcccccc),
+                              ),
+                            ],
+                          ),
                         ),
+                        onTap: () {
+                          _showBottomSheetDialog();
+                        },
                       ),
                       Divider(
                         color: Color(0xffeeeeee),
