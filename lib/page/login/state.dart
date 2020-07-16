@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_married/bean/country_code.dart';
 
 class LoginState implements Cloneable<LoginState> {
   bool isShowPwd = false;
@@ -12,11 +13,15 @@ class LoginState implements Cloneable<LoginState> {
   TextEditingController pwdEditController;
   Timer timer;
 
+  ///国际区号
+  CountryCode code;
+
   @override
   LoginState clone() {
     return LoginState()
-    ..timer = timer
-    ..countDownTime = countDownTime
+      ..code = code
+      ..timer = timer
+      ..countDownTime = countDownTime
       ..isVerityCodeLogin = isVerityCodeLogin
       ..isVistor = isVistor
       ..isShowPwd = isShowPwd

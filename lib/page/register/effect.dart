@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart' hide Action;
+import 'package:flutter_married/utils/regex_utils.dart';
+import 'package:flutter_married/widgets/toast.dart';
 import 'action.dart';
 import 'state.dart';
 
@@ -12,6 +14,7 @@ Effect<RegisterState> buildEffect() {
     RegisterAction.isVerityCodeLogin: _onIsVerityCodeLogin,
     RegisterAction.getVerityCode: _onGetVerityCode,
     RegisterAction.isMale: _onIsMale,
+    RegisterAction.changeCountryCode: _onChangeCountryCode,
     Lifecycle.initState: _onInit,
     Lifecycle.dispose:_onDispose,
   });
@@ -22,6 +25,12 @@ Effect<RegisterState> buildEffect() {
 void _onInit(Action action, Context<RegisterState> ctx) {
   ctx.state.phoneEditController = TextEditingController();
   ctx.state.pwdEditController = TextEditingController();
+}
+
+void _onChangeCountryCode(Action action, Context<RegisterState> ctx) {
+  ctx.state.code = action.payload;
+  ctx.dispatch(RegisterActionCreator.onRefreshPage());
+  FocusScope.of(ctx.context).requestFocus(FocusNode());
 }
 
 void _onDispose(Action action, Context<RegisterState> ctx) {
@@ -58,7 +67,12 @@ void _countDownTimer(Context<RegisterState> ctx) {
 }
 
 void _onGetVerityCode(Action action, Context<RegisterState> ctx) {
-  _countDownTimer(ctx);
+  String phoneNum = ctx.state.phoneEditController.text;
+  if(RegUtils.regPhone(phoneNum)) {
+    _countDownTimer(ctx);
+    return;
+  }
+  Toast.toast(ctx.context,position: 'center',msg: phoneNum.isEmpty?'请输入手机号':'手机号格式不正确');
 }
 
 void _onIsShowPwd(Action action, Context<RegisterState> ctx) {

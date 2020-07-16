@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_married/bean/country_code.dart';
 
 class RegisterState implements Cloneable<RegisterState> {
 
@@ -12,10 +13,13 @@ class RegisterState implements Cloneable<RegisterState> {
   TextEditingController phoneEditController;
   TextEditingController pwdEditController;
   Timer timer;
+  CountryCode code;
+
 
   @override
   RegisterState clone() {
     return RegisterState()
+    ..code = code
       ..isMale = isMale
       ..timer = timer
       ..countDownTime = countDownTime

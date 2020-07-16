@@ -1,5 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action,Page;
+import 'package:flutter_married/page/country_code/page.dart';
 import 'package:flutter_married/page/login/page.dart';
 import 'package:flutter_married/page/register/page.dart';
 import 'package:flutter_married/page/splash/page.dart';
@@ -14,12 +15,13 @@ Widget createApp() {
       'splash_page':SplashPage(),
       'login_page':LoginPage(),
       'register_page':RegisterPage(),
+      'countrycode_page':CountryCodePage(),
       'improve_info_page':ImproveInformationPage(),
     },
   );
 
   return MaterialApp(
-    title: 'GuYun',
+    title: '真爱良缘',
     theme: ThemeData(
         primaryColor: Color(0xff545268)
     ),

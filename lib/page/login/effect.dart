@@ -1,9 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart' hide Action;
+import 'package:flutter_married/utils/regex_utils.dart';
+import 'package:flutter_married/widgets/toast.dart';
 import 'action.dart';
 import 'state.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_married/bean/country_code.dart';
 
 Effect<LoginState> buildEffect() {
   return combineEffects(<Object, Effect<LoginState>>{
@@ -12,12 +17,19 @@ Effect<LoginState> buildEffect() {
     LoginAction.isVistor: _onIsVistor,
     LoginAction.isVerityCodeLogin: _onIsVerityCodeLogin,
     LoginAction.getVerityCode: _onGetVerityCode,
+    LoginAction.changeCountryCode: _onChangeCountryCode,
     Lifecycle.initState: _onInit,
-    Lifecycle.dispose:_onDispose,
+    Lifecycle.dispose: _onDispose,
   });
 }
 
 void _onAction(Action action, Context<LoginState> ctx) {}
+
+void _onChangeCountryCode(Action action, Context<LoginState> ctx) {
+  ctx.state.code = action.payload;
+  ctx.dispatch(LoginActionCreator.onRefreshPage());
+  FocusScope.of(ctx.context).requestFocus(FocusNode());
+}
 
 void _countDownTimer(Context<LoginState> ctx) {
   ctx.state.timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -36,7 +48,12 @@ void _countDownTimer(Context<LoginState> ctx) {
 }
 
 void _onGetVerityCode(Action action, Context<LoginState> ctx) {
-  _countDownTimer(ctx);
+  String phoneNum = ctx.state.phoneEditController.text;
+  if (RegUtils.regPhone(phoneNum)) {
+    _countDownTimer(ctx);
+    return;
+  }
+  Toast.toast(ctx.context, position: 'center',msg: phoneNum.isEmpty ? '请输入手机号' : '手机号格式不正确');
 }
 
 void _onInit(Action action, Context<LoginState> ctx) {
@@ -47,7 +64,7 @@ void _onInit(Action action, Context<LoginState> ctx) {
 void _onDispose(Action action, Context<LoginState> ctx) {
   ctx.state.phoneEditController.dispose();
   ctx.state.pwdEditController.dispose();
-  if(ctx.state.timer != null) {
+  if (ctx.state.timer != null) {
     ctx.state.timer.cancel();
     ctx.state.timer = null;
   }

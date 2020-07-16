@@ -50,7 +50,9 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                         Image.asset('assets/icon_btn_register.png', width: 77),
                   ),
                   onTap: () {
-                    Navigator.of(viewService.context).pushNamed('register_page');
+                    FocusScope.of(viewService.context).requestFocus(FocusNode());
+                    Navigator.of(viewService.context)
+                        .pushNamed('register_page');
                   },
                 ),
               ),
@@ -129,41 +131,58 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                               Container(
                                 margin: EdgeInsets.only(
                                     left: 25, top: 75, right: 25),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: GestureDetector(
-                                        child: TextField(
-                                          controller: state.pwdEditController,
-                                          cursorColor: Colors.white,
-                                          maxLines: 1,
-                                          enabled: false,
-                                          style: TextStyle(
-                                              fontSize: 16, color: Colors.white),
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: '中国大陆',
-                                              hintStyle: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white)),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: GestureDetector(
+                                          child: TextField(
+                                            controller: state.pwdEditController,
+                                            cursorColor: Colors.white,
+                                            maxLines: 1,
+                                            enabled: false,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white),
+                                            decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: state.code == null?'中国':state.code.cn,
+                                                hintStyle: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.white)),
+                                          ),
+                                          onTap: () {},
                                         ),
-                                        onTap: (){},
                                       ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(right: 11),
-                                      child: Text(
-                                        '+86',
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.white),
+                                      Container(
+                                        margin: EdgeInsets.only(right: 11),
+                                        child: Text(
+                                          state.code == null?'+86':state.code.phoneCode,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white),
+                                        ),
                                       ),
-                                    ),
-                                    Container(
-                                      width: 10,
-                                      height: 18,
-                                      child: Image.asset('assets/icon_arrow_right.png'),
-                                    ),
-                                  ],
+                                      Container(
+                                        width: 10,
+                                        height: 18,
+                                        child: Image.asset(
+                                            'assets/icon_arrow_right.png'),
+                                      ),
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(viewService.context).pushNamed(
+                                        'countrycode_page',
+                                        arguments: {
+                                          'code': state.code == null
+                                              ? '+86'
+                                              : state.code.phoneCode
+                                        }).then((value) {
+                                          dispatch(LoginActionCreator.onChangeCountryCode(value));
+                                    });
+                                  },
                                 ),
                               ),
                               Opacity(
@@ -183,9 +202,11 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                           child: Column(
                             children: <Widget>[
                               Container(
-                                margin: state.isVerityCodeLogin?EdgeInsets.only(
-                                    left: 21, top: 14, right: 25):EdgeInsets.only(
-                                    left: 21, top: 75, right: 25),
+                                margin: state.isVerityCodeLogin
+                                    ? EdgeInsets.only(
+                                        left: 21, top: 14, right: 25)
+                                    : EdgeInsets.only(
+                                        left: 21, top: 75, right: 25),
                                 child: Row(
                                   children: <Widget>[
                                     Container(
@@ -198,12 +219,16 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                                         controller: state.phoneEditController,
                                         cursorColor: Colors.white,
                                         maxLines: 1,
-                                        keyboardType: state.isVerityCodeLogin?TextInputType.phone:TextInputType.text,
+                                        keyboardType: state.isVerityCodeLogin
+                                            ? TextInputType.phone
+                                            : TextInputType.text,
                                         style: TextStyle(
                                             fontSize: 16, color: Colors.white),
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: state.isVerityCodeLogin?'请输入手机号':'请输入手机号或昵称',
+                                            hintText: state.isVerityCodeLogin
+                                                ? '请输入手机号'
+                                                : '请输入手机号或昵称',
                                             hintStyle: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.white)),
@@ -229,7 +254,8 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                           child: Column(
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(left: 21, top: 14, right: 25),
+                                margin: EdgeInsets.only(
+                                    left: 21, top: 14, right: 25),
                                 child: Row(
                                   children: <Widget>[
                                     Container(
@@ -248,7 +274,8 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                                             border: InputBorder.none,
                                             hintText: '请输入密码',
                                             hintStyle: TextStyle(
-                                                fontSize: 16, color: Colors.white)),
+                                                fontSize: 16,
+                                                color: Colors.white)),
                                       ),
                                     ),
                                     GestureDetector(
@@ -258,7 +285,8 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                                             : 'assets/icon_hide_pwd.png'),
                                       ),
                                       onTap: () {
-                                        dispatch(LoginActionCreator.onIsShowPwd());
+                                        dispatch(
+                                            LoginActionCreator.onIsShowPwd());
                                       },
                                       behavior: HitTestBehavior.opaque,
                                     ),
@@ -309,15 +337,21 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                                     GestureDetector(
                                       child: Container(
                                         child: Text(
-                                          state.countDownTime==60?'获取验证码':state.countDownTime != -1?'${state.countDownTime}s后重新获取':'重新获取',
+                                          state.countDownTime == 60
+                                              ? '获取验证码'
+                                              : state.countDownTime != -1
+                                                  ? '${state.countDownTime}s后重新获取'
+                                                  : '重新获取',
                                           style: TextStyle(
                                               fontSize: 14,
                                               color: Color(0xffF92431)),
                                         ),
                                       ),
                                       onTap: () {
-                                        if(state.countDownTime == 60 || state.countDownTime == -1) {
-                                          dispatch(LoginActionCreator.onGetVerityCode());
+                                        if (state.countDownTime == 60 ||
+                                            state.countDownTime == -1) {
+                                          dispatch(LoginActionCreator
+                                              .onGetVerityCode());
                                         }
                                       },
                                       behavior: HitTestBehavior.opaque,
@@ -343,12 +377,13 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                             children: <Widget>[
                               GestureDetector(
                                 child: Text(
-                                  !state.isVerityCodeLogin?'验证码登录':'帐号密码登录',
+                                  !state.isVerityCodeLogin ? '验证码登录' : '帐号密码登录',
                                   style: TextStyle(
                                       fontSize: 12, color: Color(0xffF92431)),
                                 ),
                                 onTap: () {
-                                  dispatch(LoginActionCreator.onIsVerityCodeLogin());
+                                  dispatch(
+                                      LoginActionCreator.onIsVerityCodeLogin());
                                 },
                                 behavior: HitTestBehavior.opaque,
                               ),
@@ -408,6 +443,7 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                 ),
               ),
               onTap: () {
+                FocusScope.of(viewService.context).requestFocus(FocusNode());
                 dispatch(LoginActionCreator.onIsVistor());
               },
             ),

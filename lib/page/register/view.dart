@@ -68,6 +68,7 @@ Widget buildView(
                                 children: <Widget>[
                                   Expanded(
                                     child: GestureDetector(
+                                      behavior:HitTestBehavior.opaque,
                                       child: TextField(
                                         controller: state.pwdEditController,
                                         cursorColor: Colors.white,
@@ -77,18 +78,28 @@ Widget buildView(
                                             fontSize: 16, color: Colors.white),
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: '中国大陆',
+                                            hintText: state.code == null?'中国':state.code.cn,
                                             hintStyle: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.white)),
                                       ),
-                                      onTap: (){},
+                                      onTap: (){
+                                        Navigator.of(viewService.context).pushNamed(
+                                            'countrycode_page',
+                                            arguments: {
+                                              'code': state.code == null
+                                                  ? '+86'
+                                                  : state.code.phoneCode
+                                            }).then((value) {
+                                          dispatch(RegisterActionCreator.onChangeCountryCode(value));
+                                        });
+                                      },
                                     ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(right: 11),
                                     child: Text(
-                                      '+86',
+                                      state.code == null?'+86':state.code.phoneCode,
                                       style: TextStyle(
                                           fontSize: 14, color: Colors.white),
                                     ),
@@ -381,6 +392,7 @@ Widget buildView(
                               child: Image.asset(
                                   'assets/icon_register_forward.png'),
                               onTap: () {
+                                FocusScope.of(viewService.context).requestFocus(FocusNode());
                                 Navigator.of(viewService.context).pushNamed('improve_info_page');
                               },
                             ),
@@ -398,6 +410,7 @@ Widget buildView(
                                     style: TextStyle(fontSize: 12,color: Color(0xffF92431)),
                                     recognizer: TapGestureRecognizer()..onTap = (){
                                       println('1111');
+                                      FocusScope.of(viewService.context).requestFocus(FocusNode());
                                     },
                                   ),
                                   TextSpan(
@@ -409,6 +422,7 @@ Widget buildView(
                                     style: TextStyle(fontSize: 12,color: Color(0xffF92431)),
                                     recognizer: TapGestureRecognizer()..onTap = (){
                                       println('22222');
+                                      FocusScope.of(viewService.context).requestFocus(FocusNode());
                                     },
                                   ),
                                 ],
