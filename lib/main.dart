@@ -4,6 +4,7 @@ import 'package:flutter_married/page/country_code/page.dart';
 import 'package:flutter_married/page/login/page.dart';
 import 'package:flutter_married/page/register/page.dart';
 import 'package:flutter_married/page/splash/page.dart';
+import 'package:flutter_married/page/vistor/page.dart';
 
 import 'page/improve_information/page.dart';
 
@@ -17,6 +18,7 @@ Widget createApp() {
       'register_page':RegisterPage(),
       'countrycode_page':CountryCodePage(),
       'improve_info_page':ImproveInformationPage(),
+      'vistor_page':VistorPage(),
     },
   );
 

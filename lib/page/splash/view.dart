@@ -73,18 +73,28 @@ Widget buildView(SplashState state, Dispatch dispatch,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        width: 105,
-                        height: 143,
-                        child: Image.asset('assets/icon_splash_male.png'),
+                      GestureDetector(
+                        child: Container(
+                          width: 105,
+                          height: 143,
+                          child: Image.asset('assets/icon_splash_male.png'),
+                        ),
+                        onTap: () {
+                          Navigator.of(viewService.context).pushReplacementNamed('vistor_page',arguments: {'isMale':true});
+                        },
                       ),
                       SizedBox(
                         width: 46.5,
                       ),
-                      Container(
-                        width: 105,
-                        height: 143,
-                        child: Image.asset('assets/icon_splash_female.png'),
+                      GestureDetector(
+                        child: Container(
+                          width: 105,
+                          height: 143,
+                          child: Image.asset('assets/icon_splash_female.png'),
+                        ),
+                        onTap: () {
+                          Navigator.of(viewService.context).pushReplacementNamed('vistor_page',arguments: {'isMale':false});
+                        },
                       ),
                     ],
                   ),
@@ -117,7 +127,7 @@ Widget buildView(SplashState state, Dispatch dispatch,
 //                    Navigator.of(viewService.context).pop();
                     Navigator
                         .of(viewService.context)
-                        .pushNamed('login_page');
+                        .pushReplacementNamed('login_page');
                     },
                 ),
                 SizedBox(
