@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CommonItem extends StatelessWidget {
-  int index;
+  final int index;
   List<String> tags;
-  BuildContext context;
+  final bool isShowOverlayEntry;
+  final BuildContext context;
 
   CommonItem(
     this.context,
     this.index, {
     Key key,
+    this.isShowOverlayEntry,
     this.tags,
   }) : super(key: key);
 
@@ -33,7 +35,9 @@ class CommonItem extends StatelessWidget {
               FlatButton(
                 onPressed: () {
 //                  Navigator.of(context).pushNamedAndRemoveUntil('login_page',(Route<dynamic> route) => false);
-                  Navigator.of(context).pushReplacementNamed('login_page',);
+                  Navigator.of(context).pushReplacementNamed(
+                    'login_page',
+                  );
                 },
                 child: Text(
                   "登录",
@@ -48,6 +52,8 @@ class CommonItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    tags = ['产品经理','165cm','本科','8000-10000元'];
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -67,7 +73,7 @@ class CommonItem extends StatelessWidget {
                           child: Image.asset('assets/2.0x/icon_avatar_temp.png',
                               width: 100, height: 120)),
                       Visibility(
-                        visible: true,
+                        visible: index % 5== 2,
                         child: Container(
                           child: Image.asset(
                             'assets/2.0x/icon_real_name.png',
@@ -139,7 +145,7 @@ class CommonItem extends StatelessWidget {
                                     );
                                   },
                                   itemCount: tags.length,
-                                ),
+                                )
                               )
                             : Container(),
                         Container(
@@ -161,7 +167,7 @@ class CommonItem extends StatelessWidget {
               ),
             ),
             Visibility(
-              visible: index % 4 == 1,
+              visible: (isShowOverlayEntry == null && index % 4 == 1)? true : isShowOverlayEntry,
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 child: Container(
@@ -202,7 +208,9 @@ class CommonItem extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        _showDialog();
+      },
     );
   }
 }

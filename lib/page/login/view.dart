@@ -2,6 +2,10 @@ import 'package:animated_widgets/animated_widgets.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_married/page/discussion/page.dart';
+import 'package:flutter_married/page/find_person/page.dart';
+import 'package:flutter_married/page/home/page.dart';
+import 'package:flutter_married/page/user/page.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -22,6 +26,7 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
             ),
             AppBar(
               backgroundColor: Colors.transparent,
+              leading: Container(),
 //            leading: IconButton(
 //              icon: ImageIcon(AssetImage('assets/icon_back.png')),
 //              color: Colors.white,
@@ -421,7 +426,14 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                               children: <Widget>[
                                 GestureDetector(
                                   child: Image.asset('assets/icon_login.png'),
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.of(viewService.context).pushReplacementNamed('main_page',arguments: {'pages': List<Widget>.unmodifiable([
+                                      HomePage().buildPage(null),
+                                      FindPersonPage().buildPage(null),
+                                      DiscussionPage().buildPage(null),
+                                      UserPage().buildPage(null),
+                                    ])});
+                                  },
                                 ),
                                 Divider(
                                   height: 18.5,
@@ -429,7 +441,9 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                                 GestureDetector(
                                   child:
                                   Image.asset('assets/icon_wechat_login.png'),
-                                  onTap: () {},
+                                  onTap: () {
+
+                                  },
                                 ),
                               ],
                             ),

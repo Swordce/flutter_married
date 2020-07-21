@@ -44,6 +44,8 @@ dependencies:
   dotted_border: ^1.0.5
   #图片选择
   multi_image_picker: ^4.6.5
+  #选择器 数据自定义 https://pub.dev/packages/flutter_picker
+  flutter_picker: ^1.1.5
 
 dev_dependencies:
   flutter_test:

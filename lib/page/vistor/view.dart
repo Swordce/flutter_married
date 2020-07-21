@@ -20,6 +20,7 @@ Widget buildView(
           '随便看看',
           style: TextStyle(fontSize: 18, color: Colors.white),
         ),
+        leading: Container(),
 //        leading: IconButton(
 //          icon: ImageIcon(AssetImage('assets/icon_back.png')),
 //          color: Colors.white,
@@ -32,7 +33,7 @@ Widget buildView(
       body: WillPopScope(
         child: ListView.separated(
             itemBuilder: (context, index) {
-              return CommonItem(viewService.context,index,tags: state.tags,);
+              return CommonItem(context,index);
             },
             separatorBuilder: (context, index) {
               return Container(
