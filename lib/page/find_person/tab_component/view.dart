@@ -20,7 +20,7 @@ Widget buildView(TabState state, Dispatch dispatch, ViewService viewService) {
       labelColor: Color(0xffF92431),
       tabs: <Widget>[
         Tab(text: '我的情况',),
-        Tab(text: '补全资料',)
+        Tab(text: '匹配对象',)
       ],
     ),
   );

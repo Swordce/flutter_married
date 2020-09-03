@@ -30,7 +30,7 @@ Widget buildView(
                         child: Container(
                           height: 50,
                           alignment: Alignment.center,
-                          child: Text('${state.heights[index]} cm',style: TextStyle(fontSize: 15,color: Color(0xff333333)),),
+                          child: Text('${state.heights[index]}',style: TextStyle(fontSize: 15,color: Color(0xff333333)),),
                         ),
                         onTap: () {
                           dispatch(ImproveInformationActionCreator.onGetHeight('${state.heights[index]} cm'));

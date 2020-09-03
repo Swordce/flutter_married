@@ -84,18 +84,30 @@ Widget buildView(
                   Row(
                     children: <Widget>[
                       Flexible(
-                        child: Container(
-                          height: 42,
-                          child: Image.asset('assets/2.0x/icon_random_find.png'),
+                        child:GestureDetector(
+                          child:  Container(
+                            height: 42,
+                            child: Image.asset('assets/2.0x/icon_random_find.png'),
+                          ),
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            Navigator.of(viewService.context).pushNamed('find_result',arguments: {'random':true});
+                          },
                         ),
                       ),
                       SizedBox(
                         width: 12,
                       ),
                       Flexible(
-                        child: Container(
-                          height: 42,
-                          child: state.findUnlock?Image.asset('assets/2.0x/icon_precise_unlock.png'):Image.asset('assets/2.0x/icon_precise_find.png'),
+                        child: GestureDetector(
+                          child: Container(
+                            height: 42,
+                            child: state.findUnlock?Image.asset('assets/2.0x/icon_precise_unlock.png'):Image.asset('assets/2.0x/icon_precise_find.png'),
+                          ),
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            Navigator.of(viewService.context).pushNamed('find_result',arguments: {'random':false});
+                          },
                         ),
                       ),
                     ],

@@ -409,7 +409,6 @@ Widget buildView(
                                     text: '《真爱有缘服务条款》',
                                     style: TextStyle(fontSize: 12,color: Color(0xffF92431)),
                                     recognizer: TapGestureRecognizer()..onTap = (){
-                                      println('1111');
                                       FocusScope.of(viewService.context).requestFocus(FocusNode());
                                     },
                                   ),
@@ -421,7 +420,6 @@ Widget buildView(
                                     text: '《真爱有缘隐私保护政策》',
                                     style: TextStyle(fontSize: 12,color: Color(0xffF92431)),
                                     recognizer: TapGestureRecognizer()..onTap = (){
-                                      println('22222');
                                       FocusScope.of(viewService.context).requestFocus(FocusNode());
                                     },
                                   ),

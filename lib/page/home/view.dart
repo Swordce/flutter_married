@@ -80,7 +80,9 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
                 ],
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(viewService.context).pushNamed('user_info',arguments: {'isEdit':true});
+            },
           ),
         ),
 

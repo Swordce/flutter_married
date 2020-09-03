@@ -33,7 +33,7 @@ Widget buildView(
       body: WillPopScope(
         child: ListView.separated(
             itemBuilder: (context, index) {
-              return CommonItem(context,index);
+              return CommonItem(context,index,isShowOverlayEntry: true,);
             },
             separatorBuilder: (context, index) {
               return Container(

@@ -13,7 +13,7 @@ class CommonItem extends StatelessWidget {
     this.context,
     this.index, {
     Key key,
-    this.isShowOverlayEntry,
+    this.isShowOverlayEntry = false,
     this.tags,
   }) : super(key: key);
 

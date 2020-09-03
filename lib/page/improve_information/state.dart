@@ -9,7 +9,7 @@ class ImproveInformationState implements Cloneable<ImproveInformationState> {
   String personHeight = '';
 
   List<Asset> avatar;
-  List<int> heights = [];
+  List<String> heights = [];
 
   @override
   ImproveInformationState clone() {

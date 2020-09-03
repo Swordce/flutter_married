@@ -68,8 +68,12 @@ void _onInit(Action action, Context<ImproveInformationState> ctx) {
     ctx.dispatch(ImproveInformationActionCreator.onRefresh());
   });
 
-  for (int i = 120; i < 230; i++) {
-    ctx.state.heights.add(i);
+  for (int i = 145; i < 181; i++) {
+    if(i == 180) {
+      ctx.state.heights.add('$i cm以上');
+    }else {
+      ctx.state.heights.add('$i cm');
+    }
   }
 }
 
