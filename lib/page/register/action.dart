@@ -2,11 +2,15 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter_married/bean/country_code.dart';
 
 //TODO replace with your own action
-enum RegisterAction { action,refreshPage,isShowPwd,isVerityCodeLogin,getVerityCode,isMale,changeCountryCode }
+enum RegisterAction { action,refreshPage,isShowPwd,isVerityCodeLogin,getVerityCode,isMale,changeCountryCode,register }
 
 class RegisterActionCreator {
   static Action onAction() {
     return const Action(RegisterAction.action);
+  }
+
+  static Action onRegister() {
+    return const Action(RegisterAction.register);
   }
 
   static Action onChangeCountryCode(CountryCode code) {

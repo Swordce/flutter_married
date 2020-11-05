@@ -393,7 +393,7 @@ Widget buildView(
                                   'assets/icon_register_forward.png'),
                               onTap: () {
                                 FocusScope.of(viewService.context).requestFocus(FocusNode());
-                                Navigator.of(viewService.context).pushNamed('improve_info_page');
+                                dispatch(RegisterActionCreator.onRegister());
                               },
                             ),
                             Divider(

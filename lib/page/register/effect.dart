@@ -15,12 +15,11 @@ Effect<RegisterState> buildEffect() {
     RegisterAction.getVerityCode: _onGetVerityCode,
     RegisterAction.isMale: _onIsMale,
     RegisterAction.changeCountryCode: _onChangeCountryCode,
+    RegisterAction.register: _onRegister,
     Lifecycle.initState: _onInit,
-    Lifecycle.dispose:_onDispose,
+    Lifecycle.dispose: _onDispose,
   });
 }
-
-
 
 void _onInit(Action action, Context<RegisterState> ctx) {
   ctx.state.phoneEditController = TextEditingController();
@@ -36,13 +35,23 @@ void _onChangeCountryCode(Action action, Context<RegisterState> ctx) {
 void _onDispose(Action action, Context<RegisterState> ctx) {
   ctx.state.phoneEditController.dispose();
   ctx.state.pwdEditController.dispose();
-  if(ctx.state.timer != null) {
+  if (ctx.state.timer != null) {
     ctx.state.timer.cancel();
     ctx.state.timer = null;
   }
 }
 
-void _onAction(Action action, Context<RegisterState> ctx) {
+void _onAction(Action action, Context<RegisterState> ctx) {}
+
+void _onRegister(Action action, Context<RegisterState> ctx) {
+
+  String code = ctx.state.pwdEditController.text;
+  String phone = ctx.state.phoneEditController.text;
+  String sex = ctx.state.isMale?"男":"女";
+
+
+
+  Navigator.of(ctx.context).pushNamed('improve_info_page');
 }
 
 void _onIsMale(Action action, Context<RegisterState> ctx) {
@@ -68,11 +77,12 @@ void _countDownTimer(Context<RegisterState> ctx) {
 
 void _onGetVerityCode(Action action, Context<RegisterState> ctx) {
   String phoneNum = ctx.state.phoneEditController.text;
-  if(RegUtils.regPhone(phoneNum)) {
+  if (RegUtils.regPhone(phoneNum)) {
     _countDownTimer(ctx);
     return;
   }
-  Toast.toast(ctx.context,position: 'center',msg: phoneNum.isEmpty?'请输入手机号':'手机号格式不正确');
+  Toast.toast(ctx.context,
+      position: 'center', msg: phoneNum.isEmpty ? '请输入手机号' : '手机号格式不正确');
 }
 
 void _onIsShowPwd(Action action, Context<RegisterState> ctx) {

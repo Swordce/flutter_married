@@ -17,7 +17,7 @@ public final class GeneratedPluginRegistrant {
     ShimPluginRegistry shimPluginRegistry = new ShimPluginRegistry(flutterEngine);
       com.example.citypickers.CityPickersPlugin.registerWith(shimPluginRegistry.registrarFor("com.example.citypickers.CityPickersPlugin"));
       io.flutter.plugins.imagepickersaver.ImagePickerSaverPlugin.registerWith(shimPluginRegistry.registrarFor("io.flutter.plugins.imagepickersaver.ImagePickerSaverPlugin"));
-      com.vitanov.multiimagepicker.MultiImagePickerPlugin.registerWith(shimPluginRegistry.registrarFor("com.vitanov.multiimagepicker.MultiImagePickerPlugin"));
+    flutterEngine.getPlugins().add(new com.vitanov.multiimagepicker.MultiImagePickerPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
   }
 }
