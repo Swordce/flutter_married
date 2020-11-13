@@ -2,8 +2,14 @@ import 'dart:async';
 
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart' hide Action;
+import 'package:flutter_married/net/api.dart';
+import 'package:flutter_married/utils/http/http_error.dart';
+import 'package:flutter_married/utils/http/http_manager.dart';
 import 'package:flutter_married/utils/regex_utils.dart';
+import 'package:flutter_married/utils/sp_util.dart';
 import 'package:flutter_married/widgets/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'action.dart';
 import 'state.dart';
 
@@ -44,14 +50,25 @@ void _onDispose(Action action, Context<RegisterState> ctx) {
 void _onAction(Action action, Context<RegisterState> ctx) {}
 
 void _onRegister(Action action, Context<RegisterState> ctx) {
-
   String code = ctx.state.pwdEditController.text;
   String phone = ctx.state.phoneEditController.text;
-  String sex = ctx.state.isMale?"男":"女";
+  String sex = ctx.state.isMale ? "男" : "女";
 
+  // DioManager().get(url: Api.registerUrl,params: {'code':code,'phone':phone,'sex':sex});
 
+  HttpManager().post(
+      url: Api.registerUrl,
+      data: {'code': code, 'phone': phone, 'sex': sex},
+      successCallback: (data) {
+        SpUtil().putString('userId', data['userId']);
+        SpUtil().putString('token', data['token']);
+        Navigator.of(ctx.context).pushNamed('improve_info_page');
+      },
+      errorCallback: (HttpError error) {
+        Toast.toast(ctx.context,msg: error.message);
+      },
+      tag: 'register');
 
-  Navigator.of(ctx.context).pushNamed('improve_info_page');
 }
 
 void _onIsMale(Action action, Context<RegisterState> ctx) {
@@ -78,7 +95,16 @@ void _countDownTimer(Context<RegisterState> ctx) {
 void _onGetVerityCode(Action action, Context<RegisterState> ctx) {
   String phoneNum = ctx.state.phoneEditController.text;
   if (RegUtils.regPhone(phoneNum)) {
-    _countDownTimer(ctx);
+    HttpManager().get(
+        url: Api.smsCodeUrl,
+        params: {'phone': phoneNum,},
+        successCallback: (data) {
+          _countDownTimer(ctx);
+        },
+        errorCallback: (HttpError error){
+          Toast.toast(ctx.context,msg: error.message);
+        },
+        tag: 'smsCode');
     return;
   }
   Toast.toast(ctx.context,

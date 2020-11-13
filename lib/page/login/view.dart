@@ -157,9 +157,10 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                                         Expanded(
                                           child: GestureDetector(
                                             child: TextField(
-                                              controller: state.pwdEditController,
+                                              controller: new TextEditingController(),
                                               cursorColor: Colors.white,
                                               maxLines: 1,
+                                              readOnly: true,
                                               enabled: false,
                                               style: TextStyle(
                                                   fontSize: 16,
@@ -427,12 +428,7 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                                 GestureDetector(
                                   child: Image.asset('assets/icon_login.png'),
                                   onTap: () {
-                                    Navigator.of(viewService.context).pushReplacementNamed('main_page',arguments: {'pages': List<Widget>.unmodifiable([
-                                      HomePage().buildPage(null),
-                                      FindPersonPage().buildPage(null),
-                                      DiscussionPage().buildPage(null),
-                                      UserPage().buildPage(null),
-                                    ])});
+                                    dispatch(LoginActionCreator.onLogin());
                                   },
                                 ),
                                 Divider(

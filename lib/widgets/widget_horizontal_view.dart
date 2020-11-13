@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CommonHorizontalView extends StatelessWidget {
@@ -12,6 +13,7 @@ class CommonHorizontalView extends StatelessWidget {
   final String iconPath;
   final double iconWidth;
   final double iconHeight;
+  final bool showLeftIcon;
 
   //左边文本属性
   final String text;
@@ -37,7 +39,7 @@ class CommonHorizontalView extends StatelessWidget {
       this.height = 48,
       this.width = double.infinity,
       this.padding = const EdgeInsets.only(left: 15,right: 15),
-      @required this.iconPath,
+      this.iconPath='',
       this.iconWidth = 18,
       this.iconHeight = 18,
       @required this.text,
@@ -48,12 +50,13 @@ class CommonHorizontalView extends StatelessWidget {
       this.rightTextColor = 0xff999999,
       this.rightTextSize = 15,
       this.showRightArrow = true,
-      this.spacing = 10, this.onPressed})
+      this.spacing = 10, this.onPressed, this.showLeftIcon=true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       height: height,
       width: width,
       child: Padding(
@@ -63,10 +66,13 @@ class CommonHorizontalView extends StatelessWidget {
           onTap: onPressed,
           child: Row(
             children: <Widget>[
-              Image.asset(
-                iconPath,
-                width: iconWidth,
-                height: iconHeight,
+              Visibility(
+                visible: showLeftIcon,
+                child: Image.asset(
+                  iconPath,
+                  width: iconWidth,
+                  height: iconHeight,
+                ),
               ),
               SizedBox(
                 width: spacing,

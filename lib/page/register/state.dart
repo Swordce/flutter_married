@@ -9,9 +9,9 @@ class RegisterState implements Cloneable<RegisterState> {
   bool isShowPwd = false;
   bool isVerityCodeLogin = true;
   bool isMale = true;
-  int countDownTime = 60;
   TextEditingController phoneEditController;
   TextEditingController pwdEditController;
+  int countDownTime = 60;
   Timer timer;
   CountryCode code;
 

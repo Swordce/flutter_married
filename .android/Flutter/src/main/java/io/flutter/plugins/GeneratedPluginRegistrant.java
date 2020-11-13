@@ -16,8 +16,11 @@ public final class GeneratedPluginRegistrant {
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     ShimPluginRegistry shimPluginRegistry = new ShimPluginRegistry(flutterEngine);
       com.example.citypickers.CityPickersPlugin.registerWith(shimPluginRegistry.registrarFor("com.example.citypickers.CityPickersPlugin"));
+    flutterEngine.getPlugins().add(new io.flutter.plugins.connectivity.ConnectivityPlugin());
+      org.zoomdev.flutter.alipay.FlutterAlipayPlugin.registerWith(shimPluginRegistry.registrarFor("org.zoomdev.flutter.alipay.FlutterAlipayPlugin"));
       io.flutter.plugins.imagepickersaver.ImagePickerSaverPlugin.registerWith(shimPluginRegistry.registrarFor("io.flutter.plugins.imagepickersaver.ImagePickerSaverPlugin"));
     flutterEngine.getPlugins().add(new com.vitanov.multiimagepicker.MultiImagePickerPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
+    flutterEngine.getPlugins().add(new io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin());
   }
 }

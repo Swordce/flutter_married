@@ -10,18 +10,24 @@ import 'action.dart';
 import 'state.dart';
 
 Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
-
-  Widget _buildBorder(String iconPath,String text) {
+  Widget _buildBorder(String iconPath, String text) {
     return Container(
       width: 50,
       height: 20,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(iconPath,width: 11,height: 11,),
+          Image.asset(
+            iconPath,
+            width: 11,
+            height: 11,
+          ),
           Container(
             margin: EdgeInsets.only(left: 3),
-            child: Text('$text',style: TextStyle(color: Colors.white,fontSize: 10),),
+            child: Text(
+              '$text',
+              style: TextStyle(color: Colors.white, fontSize: 10),
+            ),
           ),
         ],
       ),
@@ -59,13 +65,15 @@ Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
                 margin: EdgeInsets.only(top: 48.5),
                 child: Column(
                   children: <Widget>[
-                    
                     Container(
                       margin: EdgeInsets.only(right: 15),
-                      child: Image.asset('assets/2.0x/icon_user_edit.png',width: 20,height: 20,),
+                      child: Image.asset(
+                        'assets/2.0x/icon_user_edit.png',
+                        width: 20,
+                        height: 20,
+                      ),
                       alignment: Alignment.topRight,
                     ),
-                    
                     Container(
                         width: 82,
                         height: 82,
@@ -79,7 +87,13 @@ Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
                       height: 10,
                     ),
                     Text(
-                      '测试帐号',
+                      (state.basicInfo != null &&
+                              state.basicInfo.nickName != null)
+                          ? state.basicInfo.nickName
+                          : (state.basicInfo != null &&
+                                  state.basicInfo.phone != null)
+                              ? state.basicInfo.phone
+                              : '暂无',
                       style: TextStyle(color: Colors.white, fontSize: 19),
                     ),
                     SizedBox(
@@ -95,11 +109,16 @@ Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        _buildBorder('assets/2.0x/icon_user_sex.png', '30岁'),
+                        _buildBorder('assets/2.0x/icon_user_sex.png', (state.basicInfo != null && state.basicInfo.age != null)?'${state.basicInfo.age}岁':'0岁'),
                         SizedBox(
                           width: 10,
                         ),
-                        _buildBorder('assets/2.0x/icon_user_location.png', '厦门'),
+                        _buildBorder(
+                            'assets/2.0x/icon_user_location.png',
+                            state.basicInfo != null &&
+                                    state.basicInfo.place != null
+                                ? state.basicInfo.place
+                                : '暂无'),
                       ],
                     ),
                   ],
@@ -144,15 +163,22 @@ Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
               showRightText: true,
               rightText: '单次卡',
               rightTextColor: 0xffFFA600,
-              onPressed: (){
+              onPressed: () {
                 Navigator.of(viewService.context).pushNamed('open_vip');
               },
             ),
-            CommonHorizontalView(
-              iconPath: 'assets/2.0x/icon_user_sign.png',
-              text: '签到领会员',
-              showRightText: true,
-              rightText: '已签到',
+            GestureDetector(
+              child: CommonHorizontalView(
+                iconPath: 'assets/2.0x/icon_user_sign.png',
+                text: '签到领会员',
+                showRightText: true,
+                rightText: '未签到',
+              ),
+              behavior: HitTestBehavior.opaque,
+              onTap: (){
+                Navigator.of(viewService.context)
+                    .pushNamed('sign_in',);
+              },
             ),
             Divider(
               height: 0.5,
@@ -165,17 +191,18 @@ Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
             CommonHorizontalView(
               iconPath: 'assets/2.0x/icon_user_mylover.png',
               text: '我的良缘',
-              onPressed: (){
-                Navigator.of(viewService.context).pushNamed('lover',arguments: {'initPage':0});
+              onPressed: () {
+                Navigator.of(viewService.context)
+                    .pushNamed('lover', arguments: {'initPage': 0});
               },
             ),
             CommonHorizontalView(
-              iconPath: 'assets/2.0x/icon_user_visible.png',
-              text: '谁看过我',
-              onPressed: (){
-                Navigator.of(viewService.context).pushNamed('lover',arguments: {'initPage':1});
-              }
-            ),
+                iconPath: 'assets/2.0x/icon_user_visible.png',
+                text: '谁看过我',
+                onPressed: () {
+                  Navigator.of(viewService.context)
+                      .pushNamed('lover', arguments: {'initPage': 1});
+                }),
             CommonHorizontalView(
               iconPath: 'assets/2.0x/icon_user_item_dynamic.png',
               text: '我的动态',
@@ -188,9 +215,19 @@ Widget buildView(UserState state, Dispatch dispatch, ViewService viewService) {
             SizedBox(
               height: 15,
             ),
-            CommonHorizontalView(
-              iconPath: 'assets/2.0x/icon_user_setting.png',
-              text: '设置',
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              child: CommonHorizontalView(
+                iconPath: 'assets/2.0x/icon_user_setting.png',
+                text: '设置',
+              ),
+              onTap: () {
+                Navigator.of(viewService.context)
+                    .pushNamed('account_setting')
+                    .then((value) {
+                  dispatch(UserActionCreator.onRefreshUser());
+                });
+              },
             ),
             Divider(
               height: 0.5,

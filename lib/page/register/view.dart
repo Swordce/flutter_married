@@ -70,7 +70,8 @@ Widget buildView(
                                     child: GestureDetector(
                                       behavior:HitTestBehavior.opaque,
                                       child: TextField(
-                                        controller: state.pwdEditController,
+                                        controller: TextEditingController(),
+                                        readOnly: true,
                                         cursorColor: Colors.white,
                                         maxLines: 1,
                                         enabled: false,

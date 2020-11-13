@@ -2,12 +2,18 @@ import 'package:animated_widgets/animated_widgets.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_married/page/discussion/page.dart';
+import 'package:flutter_married/page/find_person/page.dart';
+import 'package:flutter_married/page/home/page.dart';
+import 'package:flutter_married/page/user/page.dart';
+import 'package:flutter_married/utils/http/http_manager.dart';
+import 'package:flutter_married/utils/sp_util.dart';
 
 import 'action.dart';
 import 'state.dart';
 
-Widget buildView(SplashState state, Dispatch dispatch,
-    ViewService viewService) {
+Widget buildView(
+    SplashState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     body: Stack(
       children: <Widget>[
@@ -47,14 +53,12 @@ Widget buildView(SplashState state, Dispatch dispatch,
           enabled: !state.isVistor,
           duration: Duration(milliseconds: 300),
         ),
-
         TranslationAnimatedWidget.tween(
           enabled: state.isVistor,
           duration: Duration(milliseconds: 300),
           translationDisabled: Offset(0, 200),
           translationEnabled: Offset(0, 0),
-          child:
-          OpacityAnimatedWidget.tween(
+          child: OpacityAnimatedWidget.tween(
             enabled: state.isVistor,
             opacityDisabled: 0,
             opacityEnabled: 1,
@@ -80,7 +84,9 @@ Widget buildView(SplashState state, Dispatch dispatch,
                           child: Image.asset('assets/icon_splash_male.png'),
                         ),
                         onTap: () {
-                          Navigator.of(viewService.context).pushReplacementNamed('vistor_page',arguments: {'isMale':true});
+                          Navigator.of(viewService.context)
+                              .pushReplacementNamed('vistor_page',
+                                  arguments: {'isMale': true});
                         },
                       ),
                       SizedBox(
@@ -93,7 +99,9 @@ Widget buildView(SplashState state, Dispatch dispatch,
                           child: Image.asset('assets/icon_splash_female.png'),
                         ),
                         onTap: () {
-                          Navigator.of(viewService.context).pushReplacementNamed('vistor_page',arguments: {'isMale':false});
+                          Navigator.of(viewService.context)
+                              .pushReplacementNamed('vistor_page',
+                                  arguments: {'isMale': false});
                         },
                       ),
                     ],
@@ -125,10 +133,25 @@ Widget buildView(SplashState state, Dispatch dispatch,
                   ),
                   onTap: () {
 //                    Navigator.of(viewService.context).pop();
-                    Navigator
-                        .of(viewService.context)
-                        .pushReplacementNamed('login_page');
-                    },
+                    String token = SpUtil().getString("token");
+                    // String token = "";
+                    HttpManager().client.options.headers = {'Authorization':token};
+                    // println('token=$token');
+                    if (token != null && token.isNotEmpty) {
+                      Navigator.of(viewService.context)
+                          .pushReplacementNamed('main_page', arguments: {
+                        'pages': List<Widget>.unmodifiable([
+                          HomePage().buildPage(null),
+                          FindPersonPage().buildPage(null),
+                          DiscussionPage().buildPage(null),
+                          UserPage().buildPage(null),
+                        ])
+                      });
+                    } else {
+                      Navigator.of(viewService.context)
+                          .pushReplacementNamed('login_page');
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 18.5,

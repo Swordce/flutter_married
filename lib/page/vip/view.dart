@@ -8,6 +8,240 @@ import 'state.dart';
 
 Widget buildView(
     OpenVipState state, Dispatch dispatch, ViewService viewService) {
+  Widget _buildRow() {
+    return Row(
+      children: <Widget>[
+        Flexible(
+          child: GestureDetector(
+            onTap: () {
+              dispatch(OpenVipActionCreator.onChangeIndex(0));
+            },
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                Image.asset(
+                  state.selectIndex == 0
+                      ? 'assets/2.0x/icon_vip_checked.png'
+                      : 'assets/2.0x/icon_vip_uncheck.png',
+                  fit: BoxFit.fill,
+                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        '单次卡',
+                        style:
+                            TextStyle(color: Color(0xff333333), fontSize: 15),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: '￥',
+                          style:
+                              TextStyle(fontSize: 10, color: Color(0xffF92431)),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: '2',
+                              style: TextStyle(
+                                  fontSize: 24, color: Color(0xffF92431)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        '1人1次',
+                        style:
+                            TextStyle(color: Color(0xff999999), fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Flexible(
+          child: GestureDetector(
+            onTap: () {
+              dispatch(OpenVipActionCreator.onChangeIndex(1));
+            },
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                Image.asset(
+                  state.selectIndex == 1
+                      ? 'assets/2.0x/icon_vip_checked.png'
+                      : 'assets/2.0x/icon_vip_uncheck.png',
+                  fit: BoxFit.fill,
+                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        '月卡',
+                        style:
+                            TextStyle(color: Color(0xff333333), fontSize: 15),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: '￥',
+                          style:
+                              TextStyle(fontSize: 10, color: Color(0xffF92431)),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: '9.9',
+                              style: TextStyle(
+                                  fontSize: 24, color: Color(0xffF92431)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        '5次/天',
+                        style:
+                            TextStyle(color: Color(0xff999999), fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Flexible(
+          child: GestureDetector(
+            onTap: () {
+              dispatch(OpenVipActionCreator.onChangeIndex(2));
+            },
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                Image.asset(
+                  state.selectIndex == 2
+                      ? 'assets/2.0x/icon_vip_checked.png'
+                      : 'assets/2.0x/icon_vip_uncheck.png',
+                  fit: BoxFit.fill,
+                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        '年卡',
+                        style:
+                            TextStyle(color: Color(0xff333333), fontSize: 15),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: '￥',
+                          style:
+                              TextStyle(fontSize: 10, color: Color(0xffF92431)),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: '69',
+                              style: TextStyle(
+                                  fontSize: 24, color: Color(0xffF92431)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        '不限次数',
+                        style:
+                            TextStyle(color: Color(0xff999999), fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildItem(index) {
+    return GestureDetector(
+      onTap: () {
+        dispatch(OpenVipActionCreator.onChangeIndex(index));
+      },
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: <Widget>[
+          Image.asset(
+            state.selectIndex == index
+                ? 'assets/2.0x/icon_vip_checked.png'
+                : 'assets/2.0x/icon_vip_uncheck.png',
+            fit: BoxFit.fill,
+          ),
+          Container(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  state.products[index].name,
+                  style:
+                  TextStyle(color: Color(0xff333333), fontSize: 15),
+                ),
+                SizedBox(
+                  height: 6,
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: '￥',
+                    style:
+                    TextStyle(fontSize: 10, color: Color(0xffF92431)),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '${state.products[index].money}',
+                        style: TextStyle(
+                            fontSize: 24, color: Color(0xffF92431)),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 6,
+                ),
+                Text(
+                  '${state.products[index].describeInfo}',
+                  style:
+                  TextStyle(color: Color(0xff999999), fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   return Scaffold(
     backgroundColor: Colors.white,
     appBar: AppBar(
@@ -57,200 +291,26 @@ Widget buildView(
                     SizedBox(
                       height: 23.5,
                     ),
-                    Row(
-                      children: <Widget>[
-                        Flexible(
-                          child: GestureDetector(
-                            onTap: () {
-                              dispatch(OpenVipActionCreator.onChangeIndex(0));
-                            },
-                            child: Stack(
-                              alignment: Alignment.topCenter,
-                              children: <Widget>[
-                                Image.asset(
-                                  state.selectIndex == 0
-                                      ? 'assets/2.0x/icon_vip_checked.png'
-                                      : 'assets/2.0x/icon_vip_uncheck.png',
-                                  fit: BoxFit.fill,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(15),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        '单次卡',
-                                        style: TextStyle(
-                                            color: Color(0xff333333),
-                                            fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 6,
-                                      ),
-                                      RichText(
-                                        text: TextSpan(
-                                          text: '￥',
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              color: Color(0xffF92431)),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: '2',
-                                              style: TextStyle(
-                                                  fontSize: 24,
-                                                  color: Color(0xffF92431)),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 6,
-                                      ),
-                                      Text(
-                                        '1人1次',
-                                        style: TextStyle(
-                                            color: Color(0xff999999),
-                                            fontSize: 12),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Flexible(
-                          child: GestureDetector(
-                            onTap: () {
-                              dispatch(OpenVipActionCreator.onChangeIndex(1));
-                            },
-                            child: Stack(
-                              alignment: Alignment.topCenter,
-                              children: <Widget>[
-                                Image.asset(
-                                  state.selectIndex == 1
-                                      ? 'assets/2.0x/icon_vip_checked.png'
-                                      : 'assets/2.0x/icon_vip_uncheck.png',
-                                  fit: BoxFit.fill,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(15),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        '月卡',
-                                        style: TextStyle(
-                                            color: Color(0xff333333),
-                                            fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 6,
-                                      ),
-                                      RichText(
-                                        text: TextSpan(
-                                          text: '￥',
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              color: Color(0xffF92431)),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: '9.9',
-                                              style: TextStyle(
-                                                  fontSize: 24,
-                                                  color: Color(0xffF92431)),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 6,
-                                      ),
-                                      Text(
-                                        '5次/天',
-                                        style: TextStyle(
-                                            color: Color(0xff999999),
-                                            fontSize: 12),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Flexible(
-                          child: GestureDetector(
-                            onTap: () {
-                              dispatch(OpenVipActionCreator.onChangeIndex(2));
-                            },
-                            child: Stack(
-                              alignment: Alignment.topCenter,
-                              children: <Widget>[
-                                Image.asset(
-                                  state.selectIndex == 2
-                                      ? 'assets/2.0x/icon_vip_checked.png'
-                                      : 'assets/2.0x/icon_vip_uncheck.png',
-                                  fit: BoxFit.fill,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(15),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        '年卡',
-                                        style: TextStyle(
-                                            color: Color(0xff333333),
-                                            fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 6,
-                                      ),
-                                      RichText(
-                                        text: TextSpan(
-                                          text: '￥',
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              color: Color(0xffF92431)),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: '69',
-                                              style: TextStyle(
-                                                  fontSize: 24,
-                                                  color: Color(0xffF92431)),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 6,
-                                      ),
-                                      Text(
-                                        '不限次数',
-                                        style: TextStyle(
-                                            color: Color(0xff999999),
-                                            fontSize: 12),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                    GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, crossAxisSpacing: 5),
+                        shrinkWrap: true,
+                        itemCount: state.products.length,
+                        itemBuilder: (context, index) {
+                          return _buildItem(index);
+                        }),
                     SizedBox(
                       height: 25,
                     ),
-                    Image.asset(
-                      'assets/2.0x/icon_btn_vip.png',
-                      width: double.infinity,
-                      height: 42,
+                    GestureDetector(
+                      child: Image.asset(
+                        'assets/2.0x/icon_btn_vip.png',
+                        width: double.infinity,
+                        height: 42,
+                      ),
+                      onTap: (){
+                        dispatch(OpenVipActionCreator.onPay());
+                      },
                     ),
                     SizedBox(
                       height: 25,
@@ -277,12 +337,11 @@ Widget buildView(
                   ],
                 ),
               ),
-
             ],
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.only(left: 15, right: 15,bottom: 15,top: 38),
+          padding: EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 38),
           sliver: SliverGrid(
             delegate: SliverChildBuilderDelegate((context, index) {
               return Container(
