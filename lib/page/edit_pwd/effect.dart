@@ -2,6 +2,7 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter_married/net/api.dart';
 import 'package:flutter_married/utils/http/http_error.dart';
 import 'package:flutter_married/utils/http/http_manager.dart';
+import 'package:flutter_married/utils/sp_util.dart';
 import 'package:flutter_married/widgets/toast.dart';
 
 import 'action.dart';
@@ -11,10 +12,16 @@ Effect<EditPasswordState> buildEffect() {
   return combineEffects(<Object, Effect<EditPasswordState>>{
     EditPasswordAction.action: _onAction,
     EditPasswordAction.savePwd: _onSavePwd,
+    Lifecycle.initState:_onInit,
   });
 }
 
 void _onAction(Action action, Context<EditPasswordState> ctx) {}
+void _onInit(Action action, Context<EditPasswordState> ctx) {
+  bool settingPwd = SpUtil().getBool('settingPwd');
+  print('$settingPwd');
+  ctx.state.isSetPwd = settingPwd == null ? false : settingPwd;
+}
 
 void _onSavePwd(Action action, Context<EditPasswordState> ctx) {
   String oldPwd = ctx.state.oldPwdController.text.toString();

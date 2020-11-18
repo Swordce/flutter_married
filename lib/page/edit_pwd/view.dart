@@ -38,7 +38,7 @@ Widget buildView(EditPasswordState state, Dispatch dispatch, ViewService viewSer
     ),
     body: ListView(
       children: [
-        Container(
+        Visibility(child: Container(
           height: 48,
           color: Colors.white,
           padding: EdgeInsets.only(left: 15,right: 15),
@@ -50,6 +50,24 @@ Widget buildView(EditPasswordState state, Dispatch dispatch, ViewService viewSer
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: '请输入旧密码',
+                hintStyle: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xff666666))),
+          ),
+        ),visible: state.isSetPwd,),
+        Visibility(child: Divider(color: Color(0xffeeeeee),height: 1,),visible: state.isSetPwd,),
+        Container(
+          height: 48,
+          color: Colors.white,
+          padding: EdgeInsets.only(left: 15,right: 15),
+          child: TextField(
+            controller: state.newPwdController,
+            maxLines: 1,
+            obscureText: true,
+            style: TextStyle(color: Color(0xff333333)),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '请输入新密码',
                 hintStyle: TextStyle(
                     fontSize: 16,
                     color: Color(0xff666666))),
@@ -67,7 +85,7 @@ Widget buildView(EditPasswordState state, Dispatch dispatch, ViewService viewSer
             style: TextStyle(color: Color(0xff333333)),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: '请输入新密码',
+                hintText: '请再次输入新密码',
                 hintStyle: TextStyle(
                     fontSize: 16,
                     color: Color(0xff666666))),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_married/bean/country_code.dart';
+import 'package:flutter_married/utils/sp_util.dart';
 
 class LoginState implements Cloneable<LoginState> {
   bool isShowPwd = false;
@@ -31,5 +32,6 @@ class LoginState implements Cloneable<LoginState> {
 }
 
 LoginState initState(Map<String, dynamic> args) {
-  return LoginState();
+  LoginState state = LoginState();
+  return state;
 }

@@ -46,6 +46,7 @@ void _onLogin(Action action, Context<LoginState> ctx) {
         successCallback: (data) {
           SpUtil().putString('userId', data['userId']);
           SpUtil().putString('token', data['token']);
+          SpUtil().putBool('settingPwd', data['settingPwd']);
           HttpManager().client.options.headers = {'Authorization':data['token']};
           Navigator.of(ctx.context)
               .pushReplacementNamed('main_page', arguments: {
